@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Build...'
+                echo 'Build... {GITHUB_URL}'
             }
         }
         stage('Test') {
