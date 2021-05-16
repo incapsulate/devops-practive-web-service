@@ -3,13 +3,13 @@ pipeline {
     agent any
     environment {
         GITHUB_URL = 'https://github.com/incapsulate/devops-practive-web-service'
-        AWS_ECR_URL = 'https://482720962971.dkr.ecr.us-east-2.amazonaws.com'
+        AWS_ECR_URL = '482720962971.dkr.ecr.us-east-2.amazonaws.com'
     }
     stages {
         stage('Build') {
             steps {
                 script {
-                    docker.withRegistry("${env.AWS_ECR_URL}", 'ecr:us-east-2:aws-user') {
+                    docker.withRegistry("https://${env.AWS_ECR_URL}", 'ecr:us-east-2:aws-user') {
                         def customImage = docker.build("${env.AWS_ECR_URL}/web-service:latest", "-f Dockerfile-web .")
 
                         customImage.push()
