@@ -10,7 +10,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry("${env.AWS_ECR_URL}", 'ecr:us-east-2:aws-user') {
-                        def customImage = docker.build("${env.AWS_ECR_URL}/web-service:latest", "-t -f Dockerfile-web .")
+                        def customImage = docker.build("${env.AWS_ECR_URL}/web-service:latest", "-f Dockerfile-web .")
 
                         customImage.push()
                     }
