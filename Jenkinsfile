@@ -3,7 +3,7 @@ pipeline {
     agent any
     environment {
         GITHUB_URL = 'https://github.com/incapsulate/devops-practive-web-service'
-        AWS_ECR_URL = '482720962971.dkr.ecr.us-east-2.amazonaws.com'
+        AWS_ECR_URL = 'https://482720962971.dkr.ecr.us-east-2.amazonaws.com'
     }
     stages {
         stage('Build') {
