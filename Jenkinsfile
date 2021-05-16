@@ -8,11 +8,14 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                docker.withRegistry(${env.AWS_ECR_URL}, 'credentials-id') {
-                    def customImage = docker.build("${env.AWS_ECR_URL}/web-service:latest", "-t -f Dockerfile-web .")
+                script {
+                    docker.withRegistry(${env.AWS_ECR_URL}, 'credentials-id') {
+                        def customImage = docker.build("${env.AWS_ECR_URL}/web-service:latest", "-t -f Dockerfile-web .")
 
-                    customImage.push()
+                        customImage.push()
+                    }
                 }
+
                 echo "Building... ${env.GITHUB_URL}"
             }
         }
