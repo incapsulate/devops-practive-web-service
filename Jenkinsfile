@@ -27,7 +27,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    kubernetesDeploy(configs: "hellowhale.yml", kubeconfigId: "mykubeconfig")
+//                     kubernetesDeploy(configs: "hellowhale.yml", kubeconfigId: "mykubeconfig")
                 }
                 echo 'Deploying...'
             }
