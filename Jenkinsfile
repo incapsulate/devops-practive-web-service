@@ -21,12 +21,15 @@ pipeline {
         }
         stage('Test') {
             steps {
-                echo 'Test...'
+                echo 'Testing...'
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploy...'
+                script {
+                    kubernetesDeploy(configs: "hellowhale.yml", kubeconfigId: "mykubeconfig")
+                }
+                echo 'Deploying...'
             }
         }
     }
