@@ -6,7 +6,7 @@ pipeline {
         AWS_ECR_URL = '482720962971.dkr.ecr.us-east-2.amazonaws.com'
         K8S_DEPLOYMENT_NAME = 'web-server'
         DOCKER_IMAGE_NAME = 'web-service'
-        SHORT_GIT_COMMIT = $(git log -1 --pretty=%h)
+        SHORT_GIT_COMMIT = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
     }
     stages {
         stage('Build') {
