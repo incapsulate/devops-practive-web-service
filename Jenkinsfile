@@ -4,6 +4,7 @@ pipeline {
     environment {
         GITHUB_URL = 'https://github.com/incapsulate/devops-practive-web-service'
         AWS_ECR_URL = '482720962971.dkr.ecr.us-east-2.amazonaws.com'
+        K8S_DEPLOYMENT_NAME = 'web-server'
         DOCKER_IMAGE_NAME = 'web-service'
         DOCKER_IMAGE_VERSION = 'latest'
     }
@@ -32,7 +33,7 @@ pipeline {
 //                     kubernetesDeploy(configs: "hellowhale.yml", kubeconfigId: "kubeconfig")
 //                 }
                 script {
-                    sh("kubectl set image deployment/${env.DOCKER_IMAGE_NAME} ${env.DOCKER_IMAGE_NAME}=${env.AWS_ECR_URL}/${env.DOCKER_IMAGE_NAME}:${env.DOCKER_IMAGE_VERSION}");
+                    sh("kubectl set image deployment/${env.K8S_DEPLOYMENT_NAME} ${env.K8S_DEPLOYMENT_NAME}=${env.AWS_ECR_URL}/${env.DOCKER_IMAGE_NAME}:${env.DOCKER_IMAGE_VERSION}");
                 }
                 echo 'Deploying...'
             }
