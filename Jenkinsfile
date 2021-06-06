@@ -6,14 +6,14 @@ pipeline {
         AWS_ECR_URL = '482720962971.dkr.ecr.us-east-2.amazonaws.com'
         K8S_DEPLOYMENT_NAME = 'web-server'
         DOCKER_IMAGE_NAME = 'web-service'
-        DOCKER_IMAGE_VERSION = 'latest'
+        SHORT_GIT_COMMIT = $(git log -1 --pretty=%h)
     }
     stages {
         stage('Build') {
             steps {
                 script {
                     docker.withRegistry("https://${env.AWS_ECR_URL}", 'ecr:us-east-2:aws-user') {
-                        def customImage = docker.build("${env.AWS_ECR_URL}/${env.DOCKER_IMAGE_NAME}:${env.DOCKER_IMAGE_VERSION}", "-f Dockerfile-web .")
+                        def customImage = docker.build("${env.AWS_ECR_URL}/${env.DOCKER_IMAGE_NAME}:${BUILD_NUMBER}-${env.SHORT_GIT_COMMIT}", "-f Dockerfile-web .")
 
                         customImage.push()
                     }
@@ -33,7 +33,7 @@ pipeline {
 //                     kubernetesDeploy(configs: "hellowhale.yml", kubeconfigId: "kubeconfig")
 //                 }
                 script {
-                    sh("kubectl set image deployment/${env.K8S_DEPLOYMENT_NAME} ${env.K8S_DEPLOYMENT_NAME}=${env.AWS_ECR_URL}/${env.DOCKER_IMAGE_NAME}:${env.DOCKER_IMAGE_VERSION}");
+                    sh("kubectl set image deployment/${env.K8S_DEPLOYMENT_NAME} ${env.K8S_DEPLOYMENT_NAME}=${env.AWS_ECR_URL}/${env.DOCKER_IMAGE_NAME}:${BUILD_NUMBER}-${env.SHORT_GIT_COMMIT}");
                 }
                 echo 'Deploying...'
             }
