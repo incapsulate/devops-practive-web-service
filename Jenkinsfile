@@ -29,9 +29,6 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-//                 script {
-//                     kubernetesDeploy(configs: "hellowhale.yml", kubeconfigId: "kubeconfig")
-//                 }
                 script {
                     sh("kubectl set image deployment/${env.K8S_DEPLOYMENT_NAME} ${env.K8S_DEPLOYMENT_NAME}=${env.AWS_ECR_URL}/${env.DOCKER_IMAGE_NAME}:${BUILD_NUMBER}-${env.SHORT_GIT_COMMIT}");
                 }
