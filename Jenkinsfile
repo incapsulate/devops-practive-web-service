@@ -16,6 +16,10 @@ pipeline {
                         def customImage = docker.build("${env.AWS_ECR_URL}/${env.DOCKER_IMAGE_NAME}:${BUILD_NUMBER}-${env.SHORT_GIT_COMMIT}", "-f Dockerfile-web .")
 
                         customImage.push()
+
+                        def latestImage = docker.build("${env.AWS_ECR_URL}/${env.DOCKER_IMAGE_NAME}:latest", "-f Dockerfile-web .")
+
+                        latestImage.push()
                     }
                 }
 
